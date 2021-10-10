@@ -33,6 +33,7 @@ class NaiveBot:
                 bet = None
                 if self.bluf_number is None:
                     # takes previous number as bluff number
+                    ### fix
                     bet = bluffer(possible_bets, prev_bet[0].number)
                 else:
                     bet = bluffer(possible_bets, self.bluf_number)
@@ -50,8 +51,8 @@ if __name__ == '__main__':
 
     first = True
     # enter here your dices
-    game = DeterministicGame(dices_list=[2,4,4,5,6])
-    bot = NaiveBot(0.3, 0.2)
+    game = DeterministicGame(dices_list=[1,4,5,5,5])
+    bot = NaiveBot(0.2, 0.2)
     bet = None
     if first:
         bet = bot.MakeFirstTurn(game.get_new_bets_with_confidence())
@@ -68,7 +69,7 @@ if __name__ == '__main__':
         game.make_bet(other_bet)
         prob = game.estimate_confidence_of_bet(other_bet)
         bets = game.get_new_bets_with_confidence()
-        bet = bot.ReactToBet((bet, prob), bets)
+        bet = bot.ReactToBet((other_bet, prob), bets)
         if bet is None:
             print('LIIEEERRR')
         else:
