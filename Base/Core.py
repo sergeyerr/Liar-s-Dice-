@@ -109,7 +109,8 @@ class DeterministicGame:
             return 1.0
         else:
             # maybe different calculation, but it seems ok
-            return comb(self.dices_count_one_player * (self.num_players - 1), delta) * ((1 / self.max_roll) ** delta)
+            return comb(self.dices_count_one_player * (self.num_players - 1), delta) * ((1 / self.max_roll) ** delta) *\
+                   (((self.max_roll - 1) / self.max_roll) ** (self.dices_count_one_player * (self.num_players - 1) - delta))
 
     def get_new_bets_with_confidence(self) -> List[Tuple[Bet, float]]:
         bets = []

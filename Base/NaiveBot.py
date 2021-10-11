@@ -49,10 +49,10 @@ class NaiveBot:
 
 if __name__ == '__main__':
 
-    first = True
+    first = False
     # enter here your dices
-    game = DeterministicGame(dices_list=[1,4,5,5,5])
-    bot = NaiveBot(0.2, 0.2)
+    game = DeterministicGame()
+    bot = NaiveBot(0.1, 0.1)
     bet = None
     if first:
         bet = bot.MakeFirstTurn(game.get_new_bets_with_confidence())
@@ -64,14 +64,17 @@ if __name__ == '__main__':
         count, number = [int(x) for x in input().split()]
         if count == -1:
             bet = None
+            print(f'my state {game.roll=}')
             break
         other_bet = Bet(count, number, 1)
         game.make_bet(other_bet)
         prob = game.estimate_confidence_of_bet(other_bet)
         bets = game.get_new_bets_with_confidence()
+        #print(bets)
         bet = bot.ReactToBet((other_bet, prob), bets)
         if bet is None:
             print('LIIEEERRR')
+            print(f'my state {game.roll=}')
         else:
             print(bet)
             game.make_bet(bet)
